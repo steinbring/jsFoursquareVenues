@@ -1,0 +1,4 @@
+Author:  Joe Steinbring
+Website: http://steinbring.net
+
+This has a fairly simple purpose.  It looks to the browser for the latitude and longitude of the client device, queries the foursquare API for nearby venues, and populates a select box with the venue names.
