@@ -10,20 +10,47 @@
 
 	<script type="text/javascript">
 		function initiate_geolocation() {  
-	        navigator.geolocation.getCurrentPosition(handle_geolocation_query);  
-	     }  
+	    	navigator.geolocation.getCurrentPosition(handle_geolocation_query);  
+	    }  
 
-	     function handle_geolocation_query(position){ 
-	     	$('input[name=latitude]').val(position.coords.latitude);
-	     	$('input[name=longitude]').val(position.coords.longitude); 
-	     } 
+	    function handle_geolocation_query(position){ 
+	    	// Set the actual Lat/long for later consumption/display
+	    	$('input[name=latitude]').val(position.coords.latitude);
+	    	$('input[name=longitude]').val(position.coords.longitude); 
+	    	// Set a string with the lat/long use within the API call
+	    	var ll = position.coords.latitude+","+position.coords.longitude;
 
+	    	$.getJSON("https://api.foursquare.com/v2/venues/search",
+				{
+					// These are the settings for your API call
+					oauth_token: "DMK54WWSNS4R3KZYGBX1ZHQQXATAN1DL32YOKO45ZPF4YBXB",
+					v: "20120310",
+					ll: ll
+				},
+				function(data) {
+					// Uncomment the dump to see the raw output
+					// jQuery.dump(data.response.venues);
+					for(var i=0; i<data.response.venues.length; i++) {
+						var value = data.response.venues[i].name;
+						var newOption = '<option value="'+value+'">'+value+'</option>';
+						$('select[name=venue]').append(newOption);
+					}
+				});
+
+
+	    } 
 		initiate_geolocation();
 	</script>
 
+	<div id="images"> </div>
+
 	<form method="post" action="index.html">
-		<input type="text" name="latitude" value="">
-		<input type="text" name="longitude" value="">
+		<input type="hidden" name="latitude" value="" readonly="readonly">
+		<input type="hidden" name="longitude" value="" readonly="readonly">
+		<p>
+			<select name="venue">
+		</p>
+		</select>
 	</form>
 
 </body>
