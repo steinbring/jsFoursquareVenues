@@ -1,0 +1,30 @@
+<html>
+<head>
+	<title>jsFoursquareVenues</title>
+	<!-- Link to Google jQuery CDN Location -->
+	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+	<!-- jQuery Pluggin for JS Version of cfdump (http://www.netgrow.com.au/files/javascript_dump.cfm) -->
+	<script type="text/javascript" src="./js/jquery.dump.js"></script>
+</head>
+<body>
+
+	<script type="text/javascript">
+		function initiate_geolocation() {  
+	        navigator.geolocation.getCurrentPosition(handle_geolocation_query);  
+	     }  
+
+	     function handle_geolocation_query(position){ 
+	     	$('input[name=latitude]').val(position.coords.latitude);
+	     	$('input[name=longitude]').val(position.coords.longitude); 
+	     } 
+
+		initiate_geolocation();
+	</script>
+
+	<form method="post" action="index.html">
+		<input type="text" name="latitude" value="">
+		<input type="text" name="longitude" value="">
+	</form>
+
+</body>
+</html>
